@@ -17,8 +17,6 @@ export default (props: Props) => {
   );
   const { value } = square;
 
-  console.info("Square: idx:", idx, "square:", square);
-
   const onClick = () => {
     doSquare.click(idx, player, winner, gameID);
   };

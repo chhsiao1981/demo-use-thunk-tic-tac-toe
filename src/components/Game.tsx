@@ -13,8 +13,6 @@ export default () => {
     doGame.setCurrentMove(gameID, nextMove);
   };
 
-  console.info("Game: xIsNext:", xIsNext);
-
   return (
     <div
       style={{
