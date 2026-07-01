@@ -13,19 +13,16 @@ export default (props: Props) => {
   const { xIsNext } = props;
   const player = xIsNext ? "X" : "O";
 
-  const [game, _doGame, gameID] = useThunk<ModGame.State, typeof ModGame>(
-    ModGame,
-  );
+  const [game, _doGame] = useThunk<ModGame.State, typeof ModGame>(ModGame);
   const { currentMove, history } = game;
 
-  const [board, doBoard, boardID] = useThunk<ModBoard.State, typeof ModBoard>(
-    ModBoard,
-  );
+  const [board, doBoard] = useThunk<ModBoard.State, typeof ModBoard>(ModBoard);
   const { winner, status } = board;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: currentMove is sufficient.
   useEffect(() => {
     const squares = history[currentMove];
-    doBoard.evaluate(boardID, squares, player);
+    doBoard.evaluate(squares, player);
   }, [currentMove]);
 
   return (
@@ -47,8 +44,6 @@ export default (props: Props) => {
             idx={`${eachIdx}`}
             player={player}
             winner={winner}
-            gameID={gameID}
-            boardID={boardID}
           />
         ))}
       </div>

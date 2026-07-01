@@ -3,14 +3,12 @@ import * as ModGame from "../thunks/game";
 import Board from "./Board";
 
 export default () => {
-  const [game, doGame, gameID] = useThunk<ModGame.State, typeof ModGame>(
-    ModGame,
-  );
+  const [game, doGame] = useThunk<ModGame.State, typeof ModGame>(ModGame);
   const { history, currentMove } = game;
   const xIsNext = currentMove % 2 === 0;
 
   const jumpTo = (nextMove: number) => {
-    doGame.setCurrentMove(gameID, nextMove);
+    doGame.setCurrentMove(nextMove);
   };
 
   return (

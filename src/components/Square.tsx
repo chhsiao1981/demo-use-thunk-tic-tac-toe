@@ -5,12 +5,9 @@ type Props = {
   idx: string;
   player: string;
   winner: string;
-
-  gameID: string;
-  boardID: string;
 };
 export default (props: Props) => {
-  const { idx, player, winner, gameID } = props;
+  const { idx, player, winner } = props;
   const [square, doSquare] = useThunk<ModSquare.State, typeof ModSquare>(
     ModSquare,
     idx,
@@ -18,7 +15,7 @@ export default (props: Props) => {
   const { value } = square;
 
   const onClick = () => {
-    doSquare.click(idx, player, winner, gameID);
+    doSquare.click(idx, player, winner);
   };
 
   return (
