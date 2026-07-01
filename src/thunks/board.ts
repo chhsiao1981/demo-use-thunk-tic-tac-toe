@@ -14,17 +14,13 @@ export const defaultState: State = {
   status: "",
 };
 
-export const evaluate = (
-  id: string,
-  squares: string[],
-  player: string,
-): Thunk<State> => {
+export const evaluate = (squares: string[], player: string): Thunk<State> => {
   return (set) => {
     const winner = calculateWinner(squares);
     const turns = calculateTurns(squares);
     const status = calculateStatus(winner, turns, player);
 
-    set(id, { winner, turns, status });
+    set(null, { winner, turns, status });
   };
 };
 

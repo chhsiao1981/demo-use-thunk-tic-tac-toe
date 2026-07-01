@@ -19,26 +19,23 @@ export const defaultState: State = {
   currentMove: 0,
 };
 
-export const play = (id: string, nextSquares: string[]): Thunk<State> => {
+export const play = (nextSquares: string[]): Thunk<State> => {
   return (set, get) => {
     const { history, currentMove } = get();
 
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
 
     // can be integrated as set(null, {history: nextHistory, currentMove: nextHistory.length - 1})
-    set(id, { history: nextHistory });
-    set(id, { currentMove: nextHistory.length - 1 });
+    set(null, { history: nextHistory });
+    set(null, { currentMove: nextHistory.length - 1 });
   };
 };
 
-export const setCurrentMove = (
-  id: string,
-  currentMove: number,
-): Thunk<State> => {
+export const setCurrentMove = (currentMove: number): Thunk<State> => {
   return (set, get) => {
-    const { history } = get(id);
+    const { history } = get();
 
-    set(id, { currentMove });
+    set(null, { currentMove });
 
     const squares = history[currentMove];
     const doSquare = doMod<squareState, TypeModSquare>(squareName);

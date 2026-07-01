@@ -1,7 +1,7 @@
 import {
   type State as _State,
   doMod,
-  getStateByModule,
+  getStateOrNullByModule,
   type Thunk,
 } from "@chhsiao1981/use-thunk";
 import { ARRAY_9 } from "../const";
@@ -22,7 +22,6 @@ export const click = (
   id: string,
   player: string,
   winner: string,
-  gameID: string,
 ): Thunk<State> => {
   return (set, get, _getOrNull, _dispatch, getModuleState) => {
     const me = get(id);
@@ -36,12 +35,15 @@ export const click = (
 
     const moduleState = getModuleState();
     const nextSquares = ARRAY_9.map((eachIdx) => {
-      const { value } = getStateByModule(moduleState, `${eachIdx}`);
+      const { value } = getStateOrNullByModule(
+        moduleState,
+        `${eachIdx}`,
+      ) as State; // XXX click only after all the squares are init.
       return value;
     });
 
     const doGame = doMod<gameState, TypeModGame>(gameName);
-    doGame.play(gameID, nextSquares);
+    doGame.play(nextSquares);
   };
 };
 
