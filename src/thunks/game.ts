@@ -1,6 +1,8 @@
 import {
   type State as _State,
   doMod,
+  getMod,
+  getStateByModule,
   type Thunk,
 } from "@chhsiao1981/use-thunk";
 import { ARRAY_9 } from "../const";
@@ -22,6 +24,20 @@ export const defaultState: State = {
 export const play = (nextSquares: string[]): Thunk<State> => {
   return (set, get) => {
     const { history, currentMove } = get();
+
+    const squareModState = getMod<squareState>(squareName);
+    const squaresFromModState = ARRAY_9.map((eachIdx) => {
+      const { value } = getStateByModule(squareModState, `${eachIdx}`);
+      return value;
+    });
+    for (const idx of ARRAY_9) {
+      if (squaresFromModState[idx] !== nextSquares[idx]) {
+        console.error(
+          `game.play: (getMod) (${idx}) squares are not the same: sqauresFromModState: ${squaresFromModState[idx]} nextSquares: ${nextSquares[idx]}`,
+        );
+        break;
+      }
+    }
 
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
 
