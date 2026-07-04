@@ -9904,214 +9904,204 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region src/index.css
 var import_react = require_react();
-var import_client = require_client();
-//#endregion
-//#region node_modules/react/cjs/react-jsx-runtime.production.js
-/**
-* @license React
-* react-jsx-runtime.production.js
-*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((exports) => {
-	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-	function jsxProd(type, config, maybeKey) {
-		var key = null;
-		void 0 !== maybeKey && (key = "" + maybeKey);
-		void 0 !== config.key && (key = "" + config.key);
-		if ("key" in config) {
-			maybeKey = {};
-			for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
-		} else maybeKey = config;
-		config = maybeKey.ref;
-		return {
-			$$typeof: REACT_ELEMENT_TYPE,
-			type,
-			key,
-			ref: void 0 !== config ? config : null,
-			props: maybeKey
-		};
-	}
-	exports.Fragment = REACT_FRAGMENT_TYPE;
-	exports.jsx = jsxProd;
-	exports.jsxs = jsxProd;
-}));
-//#endregion
-//#region node_modules/@chhsiao1981/use-thunk/dist/index.js
-var import_jsx_runtime = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = require_react_jsx_runtime_production();
-})))(), o = (e) => {
+var import_client = require_client(), r = (e) => {
 	if (typeof e != "object" || !e) return e;
 	if (e instanceof Date) return new Date(e.getTime());
-	if (Array.isArray(e)) return e.map((e) => o(e));
+	if (Array.isArray(e)) return e.map((e) => r(e));
 	let t = {};
-	for (let n in e) e.hasOwnProperty(n) && (t[n] = o(e[n]));
+	for (let n in e) e.hasOwnProperty(n) && (t[n] = r(e[n]));
 	return t;
-}, s = 1, c = () => (s += 1, `${s}`), l = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", u = (e) => ({
+}, i = 1, a = () => (i += 1, `${i}`), o = (e, t) => {
+	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
+	return !0;
+}, s = (e, t) => {
+	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
+	return !0;
+}, c = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], l = "@chhsiao1981/use-thunk/REMOVE", u = (e) => (t, n, r, i, a) => {
+	let o = M(e, a());
+	o && t(d(o));
+}, d = (e) => ({
 	id: e,
 	type: l
-}), d = (e, t) => {
+}), f = (e, t) => {
+	let { id: n } = t;
+	return !n || !e.nodes[n] ? e : (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e);
+}, p = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", m = (e) => ({
+	id: e,
+	type: p
+}), h = (e, t) => {
 	let { id: n } = t;
 	return e.defaultID = n, e;
-}, f = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], p = "@chhsiao1981/use-thunk/INIT", m = (e, t) => ({
+}, g = "@chhsiao1981/use-thunk/UPDATE", _ = (e, t) => (n, r, i, a, o) => {
+	let [s, l] = c(e, t), u = M(s, o());
+	!u || !l || n(v(u, l));
+}, v = (e, t) => ({
 	id: e,
-	type: p,
-	state: t
-}), h = (e, t) => {
-	let { id: n, state: r } = t, i = {
-		id: n,
-		state: r
-	};
-	return e.nodes[n] = i, e;
-}, g = (e, t) => (n, r, i, a, s) => {
-	let [l, d] = f(e, t), { defaultState: p } = s(), h = d || o(p), g = l || c();
-	n(m(g, h));
-	let { defaultID: _ } = s();
-	_ || n(u(g));
-}, _ = {}, v = (e, t) => {
-	let n = Object.keys(e).filter((t) => typeof e[t] == "function").reduce((n, r) => {
+	type: g,
+	data: t
+}), y = (e, t) => {
+	let { id: n, data: r } = t;
+	if (!n) return e;
+	let i = e.nodes[n];
+	if (!i || o(i.stateAndDefaultState.state, r)) return e;
+	let a = Object.assign({}, i.stateAndDefaultState.state, r), { defaultState: s } = i.stateAndDefaultState;
+	return i.stateAndDefaultState = {
+		state: a,
+		defaultState: s
+	}, e;
+}, b = "@chhsiao1981/use-thunk/UPSERT", x = (e, t) => (n, r, i, a, o) => {
+	let [s, l] = c(e, t);
+	l && n(S(j(s, o()), l));
+}, S = (e, t) => ({
+	id: e,
+	type: b,
+	data: t
+}), C = (e, t) => {
+	let { id: n, data: i } = t;
+	if (!n) return e;
+	A(e, n, !0), e.nodes[n] || V(n, r(e.defaultState), e, !1);
+	let a = e.nodes[n];
+	if (o(a.stateAndDefaultState.state, i)) return e;
+	let s = Object.assign({}, a.stateAndDefaultState.state, i), { defaultState: c } = a.stateAndDefaultState;
+	return a.stateAndDefaultState = {
+		state: s,
+		defaultState: c
+	}, e;
+}, w = {
+	init: q,
+	update: _,
+	upsert: x,
+	remove: u,
+	setDefaultID: m,
+	_setDefaultID: m
+}, T = { _setDefaultID: m }, E = Object.keys(T), D = {}, O = (e, t) => {
+	let n = Object.keys(e).filter((t) => typeof e[t] == "function" && !T[t]).reduce((n, r) => {
 		let i = e[r];
 		return n[r] = (...e) => t(i(...e)), n;
 	}, {});
-	return Object.keys(B).reduce((e, n) => {
+	return Object.keys(w).reduce((e, n) => {
 		if (e[n]) return e;
-		let r = B[n];
+		let r = w[n];
 		return e[n] = (...e) => t(r(...e)), e;
-	}, n), _[e.name] = n, n;
-}, y = (e) => _[e], b = (e) => e.defaultID, S = (e, t) => {
-	let n = t || b(e);
+	}, n), D[e.name] = n, n;
+}, k = (e) => D[e], A = (e, t, n) => {
+	if (!e.defaultID) {
+		if (n) {
+			e.defaultID = t;
+			return;
+		}
+		k(e.name)._setDefaultID(t);
+	}
+}, j = (e, t) => M(e, t) || a(), M = (e, t) => e || N(t), N = (e) => e.defaultID, F = (e, t) => {
+	let n = M(t, e);
 	if (!n) return null;
 	let r = e.nodes[n];
-	return r ? r.state : null;
-}, C = (e, t, n) => {
-	let r = t || b(e) || c(), i = S(e, r), a = y(e.name);
-	if (i) return e.defaultID || (e.defaultID = t, n || a._refresh()), i;
-	let s = o(e.defaultState), l = {
-		id: r,
-		state: s
+	return r ? r.stateAndDefaultState.state : null;
+}, I = (e, t) => e.nodes[t]?.stateAndDefaultState, L = (e, t, n) => (n.subscribes[t] || (n.subscribes[t] = z(t, n)), n.subscribes[t].listeners.push(e), () => {
+	let r = n.subscribes[t], i = r.listeners.length;
+	r.listeners = r.listeners.filter((t) => t !== e);
+	let a = r.listeners.length;
+	i !== a && a === 0 && delete n.subscribes[t];
+}), R = (e) => {
+	e.map((e) => {
+		e();
+	});
+}, z = (e, t) => t.subscribes[e] ? t.subscribes[e] : {
+	listeners: [],
+	subscribe: (n) => L(n, e, t),
+	getSnapshot: () => I(t, e),
+	emitChange: (e) => R(e)
+}, B = (e, t, n) => {
+	let r = n.nodes[e];
+	if (r && s(r.stateAndDefaultState.state, t)) return r;
+	let i = e === n.defaultID ? t : F(n);
+	return n.subscribes[e] = z(e, n), {
+		id: e,
+		stateAndDefaultState: {
+			state: t,
+			defaultState: i
+		}
 	};
-	return e.nodes[r] = l, e.defaultID ||= t, n || a._refresh(), s;
-}, w = (e, t) => {
-	let [n, r] = e, i = t || b(n) || c();
-	return [
-		C(n, i, !0),
-		r,
-		i
-	];
-}, T = "@chhsiao1981/use-thunk/UPDATE", E = (e, t) => (n, r, i, a, o) => {
-	let [s, c] = f(e, t), l = s || b(o());
-	!l || !c || n(D(l, c));
-}, D = (e, t) => ({
+}, V = (e, t, n, r) => {
+	let i = n.nodes[e], a = n.subscribes[e], o = B(e, t, n);
+	i !== o && (n.nodes[e] = o, !(r || !a) && a.emitChange(a.listeners));
+}, H = (e, t, n) => {
+	A(e, t, n), !e.nodes[t] && V(t, r(e.defaultState), e, n);
+}, U = (e, t) => {
+	let n = j(t, e);
+	return H(e, n, !1), F(e, n);
+}, W = "@chhsiao1981/use-thunk/INIT", G = (e, t) => ({
 	id: e,
-	type: T,
-	data: t
-}), O = (e, t) => {
-	let { id: n, data: r } = t, i = e.nodes[n];
-	if (!i) return e;
-	let a = Object.assign({}, i.state, r), o = Object.assign({}, i, { state: a });
-	return e.nodes[n] = o, e;
-}, k = "@chhsiao1981/use-thunk/REMOVE", A = (e) => (t, n, r, i, a) => {
-	let o = e || b(a());
-	o && t(j(o));
-}, j = (e) => ({
-	id: e,
-	type: k
-}), M = (e, t) => {
-	let { id: n } = t;
-	return e.nodes[n] ? (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e) : e;
-}, N = "@chhsiao1981/use-thunk/UPSERT", P = (e, t) => (n, r, i, a, o) => {
-	let [s, l] = f(e, t);
-	l && n(F(s || b(o()) || c(), l));
-}, F = (e, t) => ({
-	id: e,
-	type: N,
-	data: t
-}), I = (e, t) => {
-	let { id: n, data: r } = t, i = e.nodes[n] ?? {
-		id: n,
-		state: o(e.defaultState)
-	}, a = Object.assign({}, i.state, r), s = Object.assign({}, i, { state: a });
-	return e.nodes[n] = s, e.defaultID ||= n, e;
-}, L = "@chhsiao1981/use-thunk/REFRESH", R = () => ({
-	id: "",
-	type: L
-}), z = (e, t) => e, B = {
-	init: g,
-	update: E,
-	upsert: P,
-	remove: A,
-	setDefaultID: u,
-	refresh: R,
-	_refresh: R
-}, V = {
-	theMap: {},
-	theList: []
-}, H = (e) => V.theMap[e].moduleState, U = (e) => {
-	let { modules: t, children: n } = e, o = t || V.theList;
-	if (o.length === 0) return n;
-	let s = o[0], { context: c, moduleState: l } = V.theMap[s], [u, d] = (0, import_react.useState)(() => ({ current: l })), f = (0, import_react.useMemo)(() => ({
-		refModuleState: u,
-		setRefModuleState: d
-	}), [u]), p = o.length === 1 ? n : U({
-		modules: o.slice(1),
-		children: n
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(c.Provider, {
-		value: f,
-		children: p
-	});
-}, W = (t) => {
-	let { name: n, defaultState: r } = t;
-	if (V.theMap[n]) {
+	type: W,
+	state: t
+}), K = (e, t) => {
+	let { id: n, state: i } = t;
+	return n ? (A(e, n, !0), V(n, i || r(e.defaultState), e, !1), e) : e;
+}, q = (e, t) => (n) => {
+	let [r, i] = c(e, t);
+	n(G(r || a(), i));
+}, J = { theMap: {} }, Y = (e) => J.theMap[e].moduleState, X = (e, t = !1) => {
+	let { name: n, defaultState: r } = e;
+	if (J.theMap[n]) {
 		console.warn("registerThunk: already init:", n);
 		return;
 	}
 	let i = {
-		name: t.name,
+		name: e.name,
 		nodes: {},
-		defaultState: r
-	}, a = (0, import_react.createContext)({
-		refModuleState: { current: i },
-		setRefModuleState: () => {}
-	});
-	V.theMap[n] = {
-		context: a,
-		moduleState: i
-	}, V.theList = Object.keys(V.theMap), console.info("registerThunk: done:", n);
-}, G = {
-	[p]: h,
-	[T]: O,
-	[k]: M,
-	[N]: I,
-	[l]: d,
-	[L]: z
-}, K = (e, t) => G[t.type] ? G[t.type](e, t) : e, q = (e) => {
-	let { context: r } = V.theMap[e], { refModuleState: i, setRefModuleState: a } = (0, import_react.useContext)(r), o = (0, import_react.useCallback)(() => i.current, [i.current]), s = (0, import_react.useCallback)((e) => S(o(), e), [o]), c = (0, import_react.useCallback)((e) => C(o(), e), [o]), l = (0, import_react.useCallback)((e) => {
+		defaultState: r,
+		subscribes: {},
+		isIDBased: t
+	};
+	J.theMap[n] = { moduleState: i }, E.map((t) => {
+		e[t] && console.error(`RESERVED THUNK FUNC (${n}): ${t} is a reserved thunk function. please rename to other name`);
+	}), console.info("registerThunk: done:", n);
+}, Z = {
+	[W]: K,
+	[g]: y,
+	[l]: f,
+	[b]: C,
+	[p]: h
+}, Q = (e, t) => Z[t.type] ? Z[t.type](e, t) : e, $ = (t, r) => {
+	let i = Y(t), a = i.subscribes[r], o = (0, import_react.useSyncExternalStore)(a.subscribe, a.getSnapshot), s = (0, import_react.useCallback)(() => i, []), c = (0, import_react.useCallback)((e) => F(s(), e), []), l = (0, import_react.useCallback)((e) => U(s(), e), []), u = (0, import_react.useCallback)((e) => {
 		if (typeof e == "function") {
-			e(u, c, s, l, o);
+			e(d, l, c, u, s);
 			return;
 		}
-		a({ current: K(o(), e) });
-	}, [o]), u = (0, import_react.useCallback)((e, t) => {
+		let { id: t } = e, n = s(), { defaultID: r } = n, i = n.subscribes[t];
+		Q(n, e);
+		let { defaultID: a, isIDBased: o } = n, f = !o && (r !== a || t === a);
+		if (f) {
+			let e = F(n);
+			for (let [t, r] of Object.entries(n.nodes)) {
+				let { state: t } = r.stateAndDefaultState;
+				r.stateAndDefaultState = {
+					state: t,
+					defaultState: e
+				};
+			}
+		}
+		if (i?.emitChange(i.listeners), f) for (let [e, r] of Object.entries(n.subscribes)) e !== t && r.emitChange(r.listeners);
+	}, []), d = (0, import_react.useCallback)((e, t) => {
 		if (typeof e == "string" || e == null) {
 			if (!t) return;
-			l(P(e, t));
+			u(x(e, t));
 			return;
 		}
-		l(e);
-	}, [l]);
-	return [i, u];
-}, J = (e) => {
-	let { name: t } = e, [n, i] = q(t);
-	_[t] || v(e, i);
-	let a = _[t];
-	return (0, import_react.useMemo)(() => [n, a], [n]);
-}, X = (e, t) => {
-	let [n, i] = J(e);
-	return (0, import_react.useMemo)(() => w([n.current, i], t), [n, t]);
+		u(e);
+	}, []);
+	return [o, d];
+}, ee = (e, n) => {
+	let { name: r } = e, i = Y(r), a = j(n, i);
+	H(i, a, !0);
+	let [o, s] = $(r, a);
+	D[r] || O(e, s);
+	let c = D[r];
+	return (0, import_react.useMemo)(() => [
+		o.state,
+		c,
+		a
+	], [o, a]);
 };
 //#endregion
 //#region src/const.ts
@@ -10143,11 +10133,11 @@ var click = (id, player, winner) => {
 		set(id, { value: player });
 		const moduleState = getModuleState();
 		const nextSquares = ARRAY_9.map((eachIdx) => {
-			const { value } = C(moduleState, `${eachIdx}`);
+			const { value } = U(moduleState, `${eachIdx}`);
 			return value;
 		});
-		if (moduleState !== H("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
-		y(name$1).play(nextSquares);
+		if (moduleState !== Y("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
+		k(name$1).play(nextSquares);
 	};
 };
 var setValue = (id, value) => {
@@ -10171,9 +10161,9 @@ var defaultState$1 = {
 var play = (nextSquares) => {
 	return (set, get) => {
 		const { history, currentMove } = get();
-		const squareModState = H(name$2);
+		const squareModState = Y(name$2);
 		const squaresFromModState = ARRAY_9.map((eachIdx) => {
-			const { value } = C(squareModState, `${eachIdx}`);
+			const { value } = U(squareModState, `${eachIdx}`);
 			return value;
 		});
 		for (const idx of ARRAY_9) if (squaresFromModState[idx] !== nextSquares[idx]) {
@@ -10190,7 +10180,7 @@ var setCurrentMove = (currentMove) => {
 		const { history } = get();
 		set(null, { currentMove });
 		const squares = history[currentMove];
-		const doSquare = y(name$2);
+		const doSquare = k(name$2);
 		ARRAY_9.map((eachIdx) => {
 			doSquare.setValue(`${eachIdx}`, squares[eachIdx]);
 		});
@@ -10278,10 +10268,47 @@ var calculateStatus = (winner, turns, player) => {
 	return `Next player: ${player}`;
 };
 //#endregion
+//#region node_modules/react/cjs/react-jsx-runtime.production.js
+/**
+* @license React
+* react-jsx-runtime.production.js
+*
+* Copyright (c) Meta Platforms, Inc. and affiliates.
+*
+* This source code is licensed under the MIT license found in the
+* LICENSE file in the root directory of this source tree.
+*/
+var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((exports) => {
+	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+	function jsxProd(type, config, maybeKey) {
+		var key = null;
+		void 0 !== maybeKey && (key = "" + maybeKey);
+		void 0 !== config.key && (key = "" + config.key);
+		if ("key" in config) {
+			maybeKey = {};
+			for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
+		} else maybeKey = config;
+		config = maybeKey.ref;
+		return {
+			$$typeof: REACT_ELEMENT_TYPE,
+			type,
+			key,
+			ref: void 0 !== config ? config : null,
+			props: maybeKey
+		};
+	}
+	exports.Fragment = REACT_FRAGMENT_TYPE;
+	exports.jsx = jsxProd;
+	exports.jsxs = jsxProd;
+}));
+//#endregion
 //#region src/components/Square.tsx
+var import_jsx_runtime = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = require_react_jsx_runtime_production();
+})))();
 var Square_default = (props) => {
 	const { idx, player, winner } = props;
-	const [square, doSquare] = X(square_exports, idx);
+	const [square, doSquare] = ee(square_exports, idx);
 	const { value } = square;
 	const onClick = () => {
 		doSquare.click(idx, player, winner);
@@ -10310,9 +10337,9 @@ var Square_default = (props) => {
 var Board_default = (props) => {
 	const { xIsNext } = props;
 	const player = xIsNext ? "X" : "O";
-	const [game, _doGame] = X(game_exports);
+	const [game, _doGame] = ee(game_exports);
 	const { currentMove, history } = game;
-	const [board, doBoard] = X(board_exports);
+	const [board, doBoard] = ee(board_exports);
 	const { winner, status } = board;
 	(0, import_react.useEffect)(() => {
 		const squares = history[currentMove];
@@ -10340,7 +10367,7 @@ var Board_default = (props) => {
 //#endregion
 //#region src/components/Game.tsx
 var Game_default = () => {
-	const [game, doGame] = X(game_exports);
+	const [game, doGame] = ee(game_exports);
 	const { history, currentMove } = game;
 	const xIsNext = currentMove % 2 === 0;
 	const jumpTo = (nextMove) => {
@@ -10366,8 +10393,8 @@ var Game_default = () => {
 };
 //#endregion
 //#region src/main.tsx
-W(game_exports);
-W(board_exports);
-W(square_exports);
-(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(U, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Game_default, {}) }) }));
+X(game_exports);
+X(board_exports);
+X(square_exports);
+(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Game_default, {}) }));
 //#endregion
