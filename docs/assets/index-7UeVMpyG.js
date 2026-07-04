@@ -10392,9 +10392,44 @@ var Game_default = () => {
 	});
 };
 //#endregion
+//#region src/assets/github.svg
+var github_default = "data:image/svg+xml,%3csvg%20width='128'%20height='128'%20viewBox='0%200%20128%20128'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M56.7937%2084.9688C44.4187%2083.4688%2035.7%2074.5625%2035.7%2063.0313C35.7%2058.3438%2037.3875%2053.2813%2040.2%2049.9063C38.9812%2046.8125%2039.1687%2040.25%2040.575%2037.5313C44.325%2037.0625%2049.3875%2039.0313%2052.3875%2041.75C55.95%2040.625%2059.7%2040.0625%2064.2937%2040.0625C68.8875%2040.0625%2072.6375%2040.625%2076.0125%2041.6563C78.9187%2039.0313%2084.075%2037.0625%2087.825%2037.5313C89.1375%2040.0625%2089.325%2046.625%2088.1062%2049.8125C91.1062%2053.375%2092.7%2058.1563%2092.7%2063.0313C92.7%2074.5625%2083.9812%2083.2813%2071.4187%2084.875C74.6062%2086.9375%2076.7625%2091.4375%2076.7625%2096.5938L76.7625%20106.344C76.7625%20109.156%2079.1062%20110.75%2081.9187%20109.625C98.8875%20103.156%20112.2%2086.1875%20112.2%2065.1875C112.2%2038.6563%2090.6375%2017%2064.1062%2017C37.575%2017%2016.2%2038.6562%2016.2%2065.1875C16.2%2086%2029.4187%20103.25%2047.2312%20109.719C49.7625%20110.656%2052.2%20108.969%2052.2%20106.438L52.2%2098.9375C50.8875%2099.5%2049.2%2099.875%2047.7%2099.875C41.5125%2099.875%2037.8562%2096.5%2035.2312%2090.2188C34.2%2087.6875%2033.075%2086.1875%2030.9187%2085.9063C29.7937%2085.8125%2029.4187%2085.3438%2029.4187%2084.7813C29.4187%2083.6563%2031.2937%2082.8125%2033.1687%2082.8125C35.8875%2082.8125%2038.2312%2084.5%2040.6687%2087.9688C42.5437%2090.6875%2044.5125%2091.9063%2046.8562%2091.9063C49.2%2091.9063%2050.7%2091.0625%2052.8562%2088.9063C54.45%2087.3125%2055.6687%2085.9063%2056.7937%2084.9688Z'%20fill='white'/%3e%3c/svg%3e";
+var Header_module_default = {
+	root: "_root_1dxzb_1",
+	username: "_username_1dxzb_10",
+	github: "_github_1dxzb_16",
+	link: "_link_1dxzb_26"
+};
+//#endregion
+//#region src/Header.tsx
+var Header_default = () => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: Header_module_default.root,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: Header_module_default.username,
+				children: "Hi～ "
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+				className: Header_module_default.link,
+				href: "https://chhsiao1981.github.io/demo-use-thunk/",
+				children: "async-counter"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+				href: "https://github.com/chhsiao1981/demo-use-thunk",
+				className: Header_module_default.github,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+					"aria-label": "github logo",
+					src: github_default
+				})
+			})
+		]
+	});
+};
+//#endregion
 //#region src/main.tsx
 X(game_exports);
 X(board_exports);
 X(square_exports);
-(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Game_default, {}) }));
+(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.StrictMode, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Game_default, {})] }));
 //#endregion
