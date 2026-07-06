@@ -9911,197 +9911,201 @@ var import_client = require_client(), r = (e) => {
 	let t = {};
 	for (let n in e) e.hasOwnProperty(n) && (t[n] = r(e[n]));
 	return t;
-}, i = 1, a = () => (i += 1, `${i}`), o = (e, t) => {
+}, i = (e) => e ? e() : crypto.randomUUID(), a = (e, t) => {
 	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
 	return !0;
-}, s = (e, t) => {
+}, o = (e, t) => {
 	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
 	return !0;
-}, c = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], l = "@chhsiao1981/use-thunk/REMOVE", u = (e) => (t, n, r, i, a) => {
-	let o = M(e, a());
-	o && t(d(o));
-}, d = (e) => ({
-	id: e,
-	type: l
-}), f = (e, t) => {
-	let { id: n } = t;
-	return !n || !e.nodes[n] ? e : (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e);
-}, p = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", m = (e) => ({
-	id: e,
-	type: p
-}), h = (e, t) => {
-	let { id: n } = t;
-	return e.defaultID = n, e;
-}, g = "@chhsiao1981/use-thunk/UPDATE", _ = (e, t) => (n, r, i, a, o) => {
-	let [s, l] = c(e, t), u = M(s, o());
-	!u || !l || n(v(u, l));
-}, v = (e, t) => ({
-	id: e,
-	type: g,
-	data: t
-}), y = (e, t) => {
-	let { id: n, data: r } = t;
-	if (!n) return e;
-	let i = e.nodes[n];
-	if (!i || o(i.stateAndDefaultState.state, r)) return e;
-	let a = Object.assign({}, i.stateAndDefaultState.state, r), { defaultState: s } = i.stateAndDefaultState;
-	return i.stateAndDefaultState = {
-		state: a,
-		defaultState: s
-	}, e;
-}, b = "@chhsiao1981/use-thunk/UPSERT", x = (e, t) => (n, r, i, a, o) => {
-	let [s, l] = c(e, t);
-	l && n(S(j(s, o()), l));
-}, S = (e, t) => ({
-	id: e,
-	type: b,
-	data: t
-}), C = (e, t) => {
-	let { id: n, data: i } = t;
-	if (!n) return e;
-	A(e, n, !0), e.nodes[n] || V(n, r(e.defaultState), e, !1);
-	let a = e.nodes[n];
-	if (o(a.stateAndDefaultState.state, i)) return e;
-	let s = Object.assign({}, a.stateAndDefaultState.state, i), { defaultState: c } = a.stateAndDefaultState;
-	return a.stateAndDefaultState = {
-		state: s,
-		defaultState: c
-	}, e;
-}, w = {
-	init: q,
-	update: _,
-	upsert: x,
-	remove: u,
-	setDefaultID: m,
-	_setDefaultID: m
-}, T = { _setDefaultID: m }, E = Object.keys(T), D = {}, O = (e, t) => {
-	let n = Object.keys(e).filter((t) => typeof e[t] == "function" && !T[t]).reduce((n, r) => {
-		let i = e[r];
-		return n[r] = (...e) => t(i(...e)), n;
-	}, {});
-	return Object.keys(w).reduce((e, n) => {
-		if (e[n]) return e;
-		let r = w[n];
-		return e[n] = (...e) => t(r(...e)), e;
-	}, n), D[e.name] = n, n;
-}, k = (e) => D[e], A = (e, t, n) => {
-	if (!e.defaultID) {
-		if (n) {
-			e.defaultID = t;
-			return;
-		}
-		k(e.name)._setDefaultID(t);
-	}
-}, j = (e, t) => M(e, t) || a(), M = (e, t) => e || N(t), N = (e) => e.defaultID, F = (e, t) => {
-	let n = M(t, e);
+}, s = (e, t, n) => {
+	e.defaultID || n || (e.defaultID = t);
+}, c = (e, t, n) => l(e, t) || i(n), l = (e, t) => e || u(t), u = (e) => e.defaultID, f = (e, t) => {
+	let n = l(t, e);
 	if (!n) return null;
 	let r = e.nodes[n];
-	return r ? r.stateAndDefaultState.state : null;
-}, I = (e, t) => e.nodes[t]?.stateAndDefaultState, L = (e, t, n) => (n.subscribes[t] || (n.subscribes[t] = z(t, n)), n.subscribes[t].listeners.push(e), () => {
+	return r ? r.stateAndIsDefaultID.state : null;
+}, p = (e, t) => e.nodes[t]?.stateAndIsDefaultID, m = (e, t, n) => (n.subscribes[t] || (n.subscribes[t] = g(t, n)), n.subscribes[t].listeners.push(e), () => {
 	let r = n.subscribes[t], i = r.listeners.length;
 	r.listeners = r.listeners.filter((t) => t !== e);
 	let a = r.listeners.length;
 	i !== a && a === 0 && delete n.subscribes[t];
-}), R = (e) => {
+}), h = (e) => {
 	e.map((e) => {
 		e();
 	});
-}, z = (e, t) => t.subscribes[e] ? t.subscribes[e] : {
+}, g = (e, t) => t.subscribes[e] ? t.subscribes[e] : {
 	listeners: [],
-	subscribe: (n) => L(n, e, t),
-	getSnapshot: () => I(t, e),
-	emitChange: (e) => R(e)
-}, B = (e, t, n) => {
+	subscribe: (n) => m(n, e, t),
+	getSnapshot: () => p(t, e),
+	emitChange: (e) => h(e)
+}, _ = (e, t, n) => {
 	let r = n.nodes[e];
-	if (r && s(r.stateAndDefaultState.state, t)) return r;
-	let i = e === n.defaultID ? t : F(n);
-	return n.subscribes[e] = z(e, n), {
+	if (r && o(r.stateAndIsDefaultID.state, t)) return r;
+	let i = e === n.defaultID;
+	return n.subscribes[e] = g(e, n), {
 		id: e,
-		stateAndDefaultState: {
+		stateAndIsDefaultID: {
 			state: t,
-			defaultState: i
+			isDefaultID: i
 		}
 	};
-}, V = (e, t, n, r) => {
-	let i = n.nodes[e], a = n.subscribes[e], o = B(e, t, n);
+}, v = (e, t, n, r) => {
+	let i = n.nodes[e], a = n.subscribes[e], o = _(e, t, n);
 	i !== o && (n.nodes[e] = o, !(r || !a) && a.emitChange(a.listeners));
-}, H = (e, t, n) => {
-	A(e, t, n), !e.nodes[t] && V(t, r(e.defaultState), e, n);
-}, U = (e, t) => {
-	let n = j(t, e);
-	return H(e, n, !1), F(e, n);
-}, W = "@chhsiao1981/use-thunk/INIT", G = (e, t) => ({
+}, y = (e, t, n, i) => {
+	s(e, t, i), !e.nodes[t] && v(t, r(e.defaultState), e, n);
+}, b = (e, t) => {
+	let n = c(t, e);
+	return y(e, n, !1, t), f(e, n);
+}, x = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], S = "@chhsiao1981/use-thunk/INIT", C = (e, t) => ({
 	id: e,
-	type: W,
+	type: S,
 	state: t
-}), K = (e, t) => {
+}), w = (e, t) => {
 	let { id: n, state: i } = t;
-	return n ? (A(e, n, !0), V(n, i || r(e.defaultState), e, !1), e) : e;
-}, q = (e, t) => (n) => {
-	let [r, i] = c(e, t);
-	n(G(r || a(), i));
-}, J = { theMap: {} }, Y = (e) => J.theMap[e].moduleState, X = (e, t = !1) => {
-	let { name: n, defaultState: r } = e;
-	if (J.theMap[n]) {
-		console.warn("registerThunk: already init:", n);
+	return n && v(n, i || r(e.defaultState), e, !1), e;
+}, T = (e, t, n) => (r, a, o, c, l) => {
+	let [u, d] = x(e, t), f = u || i(n);
+	s(l(), f, u), r(C(f, d));
+}, E = "@chhsiao1981/use-thunk/UPDATE", D = (e, t) => (n, r, i, a, o) => {
+	let [s, c] = x(e, t), u = l(s, o());
+	!u || !c || n(O(u, c));
+}, O = (e, t) => ({
+	id: e,
+	type: E,
+	data: t
+}), k = (e, t) => {
+	let { id: n, data: r } = t;
+	if (!n) return e;
+	let i = e.nodes[n];
+	if (!i || a(i.stateAndIsDefaultID.state, r)) return e;
+	let o = Object.assign({}, i.stateAndIsDefaultID.state, r), { isDefaultID: s } = i.stateAndIsDefaultID;
+	return i.stateAndIsDefaultID = {
+		state: o,
+		isDefaultID: s
+	}, e;
+}, A = "@chhsiao1981/use-thunk/REMOVE", j = (e) => (t, n, r, i, a) => {
+	let o = l(e, a());
+	o && t(M(o));
+}, M = (e) => ({
+	id: e,
+	type: A
+}), N = (e, t) => {
+	let { id: n } = t;
+	return !n || !e.nodes[n] ? e : (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e);
+}, P = "@chhsiao1981/use-thunk/UPSERT", F = (e, t, n) => (r, i, a, o, l) => {
+	let [u, d] = x(e, t);
+	if (!d) return;
+	let f = c(u, l(), n);
+	s(l(), f, u), r(I(f, d));
+}, I = (e, t) => ({
+	id: e,
+	type: P,
+	data: t
+}), L = (e, t) => {
+	let { id: n, data: i } = t;
+	if (!n) return e;
+	e.nodes[n] || v(n, r(e.defaultState), e, !1);
+	let o = e.nodes[n];
+	if (a(o.stateAndIsDefaultID.state, i)) return e;
+	let s = Object.assign({}, o.stateAndIsDefaultID.state, i), { isDefaultID: c } = o.stateAndIsDefaultID;
+	return o.stateAndIsDefaultID = {
+		state: s,
+		isDefaultID: c
+	}, e;
+}, R = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", z = (e) => (t, n, r, i) => {
+	t(B(e));
+}, B = (e) => ({
+	id: e,
+	type: R
+}), V = (e, t) => {
+	let { id: n } = t;
+	return e.defaultID = n, e;
+}, H = {
+	init: T,
+	update: D,
+	upsert: F,
+	remove: j,
+	setDefaultID: z
+}, U = { theMap: {} }, W = (e) => U.theMap[e].moduleState, G = {}, K = (e, t) => {
+	let n = Object.keys(e).filter((t) => typeof e[t] == "function").reduce((n, r) => {
+		let i = e[r];
+		return n[r] = (...e) => t(i(...e)), n;
+	}, {});
+	return Object.keys(H).reduce((e, n) => {
+		if (e[n]) return e;
+		let r = H[n];
+		return e[n] = (...e) => t(r(...e)), e;
+	}, n), G[e.name] = n, n;
+}, q = (e) => G[e], J = (e) => {
+	let { name: t, defaultState: n } = e;
+	if (U.theMap[t]) {
+		console.warn("registerThunk: already init:", t);
 		return;
 	}
-	let i = {
+	let r = {
 		name: e.name,
 		nodes: {},
-		defaultState: r,
-		subscribes: {},
-		isIDBased: t
+		defaultState: n,
+		subscribes: {}
 	};
-	J.theMap[n] = { moduleState: i }, E.map((t) => {
-		e[t] && console.error(`RESERVED THUNK FUNC (${n}): ${t} is a reserved thunk function. please rename to other name`);
-	}), console.info("registerThunk: done:", n);
-}, Z = {
-	[W]: K,
-	[g]: y,
-	[l]: f,
-	[b]: C,
-	[p]: h
-}, Q = (e, t) => Z[t.type] ? Z[t.type](e, t) : e, $ = (t, r) => {
-	let i = Y(t), a = i.subscribes[r], o = (0, import_react.useSyncExternalStore)(a.subscribe, a.getSnapshot), s = (0, import_react.useCallback)(() => i, []), c = (0, import_react.useCallback)((e) => F(s(), e), []), l = (0, import_react.useCallback)((e) => U(s(), e), []), u = (0, import_react.useCallback)((e) => {
+	U.theMap[t] = { moduleState: r }, console.info("registerThunk: done:", t);
+}, Y = {
+	[S]: w,
+	[E]: k,
+	[A]: N,
+	[P]: L,
+	[R]: V
+}, X = (e, t) => Y[t.type] ? Y[t.type](e, t) : e, Z = (t, r) => {
+	let i = W(t), a = i.subscribes[r], o = (0, import_react.useSyncExternalStore)(a.subscribe, a.getSnapshot, a.getSnapshot), s = (0, import_react.useCallback)(() => i, []), c = (0, import_react.useCallback)((e) => f(s(), e), []), l = (0, import_react.useCallback)((e) => b(s(), e), []), u = (0, import_react.useCallback)((e) => {
 		if (typeof e == "function") {
 			e(d, l, c, u, s);
 			return;
 		}
-		let { id: t } = e, n = s(), { defaultID: r } = n, i = n.subscribes[t];
-		Q(n, e);
-		let { defaultID: a, isIDBased: o } = n, f = !o && (r !== a || t === a);
-		if (f) {
-			let e = F(n);
-			for (let [t, r] of Object.entries(n.nodes)) {
-				let { state: t } = r.stateAndDefaultState;
-				r.stateAndDefaultState = {
-					state: t,
-					defaultState: e
+		let { id: t } = e, n = s(), { defaultID: r } = n;
+		X(n, e);
+		let { defaultID: i } = n, a = r !== i;
+		if (a) {
+			if (r && n.nodes[r]) {
+				let { state: e } = n.nodes[r].stateAndIsDefaultID;
+				n.nodes[r].stateAndIsDefaultID = {
+					state: e,
+					isDefaultID: !1
+				};
+			}
+			if (i && n.nodes[i]) {
+				let { state: e } = n.nodes[i].stateAndIsDefaultID;
+				n.nodes[i].stateAndIsDefaultID = {
+					state: e,
+					isDefaultID: !0
 				};
 			}
 		}
-		if (i?.emitChange(i.listeners), f) for (let [e, r] of Object.entries(n.subscribes)) e !== t && r.emitChange(r.listeners);
+		let o = n.subscribes[t];
+		if (o?.emitChange(o?.listeners), a && r && r !== t) {
+			let e = n.subscribes[r];
+			e?.emitChange(e?.listeners);
+		}
 	}, []), d = (0, import_react.useCallback)((e, t) => {
 		if (typeof e == "string" || e == null) {
 			if (!t) return;
-			u(x(e, t));
+			u(F(e, t));
 			return;
 		}
 		u(e);
 	}, []);
 	return [o, d];
-}, ee = (e, n) => {
-	let { name: r } = e, i = Y(r), a = j(n, i);
-	H(i, a, !0);
-	let [o, s] = $(r, a);
-	D[r] || O(e, s);
-	let c = D[r];
+}, Q = (e, n, r) => {
+	let { name: i } = e, a = W(i), o = c(n, a, r);
+	y(a, o, !0, n);
+	let [s, l] = Z(i, o);
+	G[i] || K(e, l);
+	let u = G[i];
 	return (0, import_react.useMemo)(() => [
-		o.state,
-		c,
-		a
-	], [o, a]);
+		s.state,
+		u,
+		o
+	], [s, o]);
 };
 //#endregion
 //#region src/const.ts
@@ -10133,11 +10137,11 @@ var click = (id, player, winner) => {
 		set(id, { value: player });
 		const moduleState = getModuleState();
 		const nextSquares = ARRAY_9.map((eachIdx) => {
-			const { value } = U(moduleState, `${eachIdx}`);
+			const { value } = b(moduleState, `${eachIdx}`);
 			return value;
 		});
-		if (moduleState !== Y("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
-		k(name$1).play(nextSquares);
+		if (moduleState !== W("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
+		q(name$1).play(nextSquares);
 	};
 };
 var setValue = (id, value) => {
@@ -10161,9 +10165,9 @@ var defaultState$1 = {
 var play = (nextSquares) => {
 	return (set, get) => {
 		const { history, currentMove } = get();
-		const squareModState = Y(name$2);
+		const squareModState = W(name$2);
 		const squaresFromModState = ARRAY_9.map((eachIdx) => {
-			const { value } = U(squareModState, `${eachIdx}`);
+			const { value } = b(squareModState, `${eachIdx}`);
 			return value;
 		});
 		for (const idx of ARRAY_9) if (squaresFromModState[idx] !== nextSquares[idx]) {
@@ -10180,7 +10184,7 @@ var setCurrentMove = (currentMove) => {
 		const { history } = get();
 		set(null, { currentMove });
 		const squares = history[currentMove];
-		const doSquare = k(name$2);
+		const doSquare = q(name$2);
 		ARRAY_9.map((eachIdx) => {
 			doSquare.setValue(`${eachIdx}`, squares[eachIdx]);
 		});
@@ -10308,7 +10312,7 @@ var import_jsx_runtime = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 })))();
 var Square_default = (props) => {
 	const { idx, player, winner } = props;
-	const [square, doSquare] = ee(square_exports, idx);
+	const [square, doSquare] = Q(square_exports, idx);
 	const { value } = square;
 	const onClick = () => {
 		doSquare.click(idx, player, winner);
@@ -10337,9 +10341,9 @@ var Square_default = (props) => {
 var Board_default = (props) => {
 	const { xIsNext } = props;
 	const player = xIsNext ? "X" : "O";
-	const [game, _doGame] = ee(game_exports);
+	const [game, _doGame] = Q(game_exports);
 	const { currentMove, history } = game;
-	const [board, doBoard] = ee(board_exports);
+	const [board, doBoard] = Q(board_exports);
 	const { winner, status } = board;
 	(0, import_react.useEffect)(() => {
 		const squares = history[currentMove];
@@ -10367,7 +10371,7 @@ var Board_default = (props) => {
 //#endregion
 //#region src/components/Game.tsx
 var Game_default = () => {
-	const [game, doGame] = ee(game_exports);
+	const [game, doGame] = Q(game_exports);
 	const { history, currentMove } = game;
 	const xIsNext = currentMove % 2 === 0;
 	const jumpTo = (nextMove) => {
@@ -10428,8 +10432,8 @@ var Header_default = () => {
 };
 //#endregion
 //#region src/main.tsx
-X(game_exports);
-X(board_exports);
-X(square_exports);
+J(game_exports);
+J(board_exports);
+J(square_exports);
 (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.StrictMode, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Game_default, {})] }));
 //#endregion
