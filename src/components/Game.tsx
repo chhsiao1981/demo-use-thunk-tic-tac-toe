@@ -1,4 +1,4 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
+import { useThunk } from "use-thunk";
 import * as ModGame from "../thunks/game";
 import Board from "./Board";
 
