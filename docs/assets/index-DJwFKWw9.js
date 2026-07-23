@@ -9957,7 +9957,7 @@ var import_client = require_client(), r = (e) => {
 }, b = (e, t) => {
 	let n = c(t, e);
 	return y(e, n, !1, t), f(e, n);
-}, x = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], S = "@chhsiao1981/use-thunk/INIT", C = (e, t) => ({
+}, x = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], S = "use-thunk/INIT", C = (e, t) => ({
 	id: e,
 	type: S,
 	state: t
@@ -9967,7 +9967,7 @@ var import_client = require_client(), r = (e) => {
 }, T = (e, t, n) => (r, a, o, c, l) => {
 	let [u, d] = x(e, t), f = u || i(n);
 	s(l(), f, u), r(C(f, d));
-}, E = "@chhsiao1981/use-thunk/UPDATE", D = (e, t) => (n, r, i, a, o) => {
+}, E = "use-thunk/UPDATE", D = (e, t) => (n, r, i, a, o) => {
 	let [s, c] = x(e, t), u = l(s, o());
 	!u || !c || n(O(u, c));
 }, O = (e, t) => ({
@@ -9984,7 +9984,7 @@ var import_client = require_client(), r = (e) => {
 		state: o,
 		isDefaultID: s
 	}, e;
-}, A = "@chhsiao1981/use-thunk/REMOVE", j = (e) => (t, n, r, i, a) => {
+}, A = "use-thunk/REMOVE", j = (e) => (t, n, r, i, a) => {
 	let o = l(e, a());
 	o && t(M(o));
 }, M = (e) => ({
@@ -9993,7 +9993,7 @@ var import_client = require_client(), r = (e) => {
 }), N = (e, t) => {
 	let { id: n } = t;
 	return !n || !e.nodes[n] ? e : (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e);
-}, P = "@chhsiao1981/use-thunk/UPSERT", F = (e, t, n) => (r, i, a, o, l) => {
+}, P = "use-thunk/UPSERT", F = (e, t, n) => (r, i, a, o, l) => {
 	let [u, d] = x(e, t);
 	if (!d) return;
 	let f = c(u, l(), n);
@@ -10013,7 +10013,7 @@ var import_client = require_client(), r = (e) => {
 		state: s,
 		isDefaultID: c
 	}, e;
-}, R = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", z = (e) => (t, n, r, i) => {
+}, R = "use-thunk/SET_DEFAULT_ID", z = (e) => (t, n, r, i) => {
 	t(B(e));
 }, B = (e) => ({
 	id: e,
@@ -10140,8 +10140,8 @@ var click = (id, player, winner) => {
 			const { value } = b(moduleState, `${eachIdx}`);
 			return value;
 		});
-		if (moduleState !== W("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
 		q(name$1).play(nextSquares);
+		if (moduleState !== W("demo-use-thunk-tic-tac-toe/square")) console.error("sqaure.click (getMod): moduleState !== moduleState2");
 	};
 };
 var setValue = (id, value) => {
@@ -10165,6 +10165,9 @@ var defaultState$1 = {
 var play = (nextSquares) => {
 	return (set, get) => {
 		const { history, currentMove } = get();
+		const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+		set(null, { history: nextHistory });
+		set(null, { currentMove: nextHistory.length - 1 });
 		const squareModState = W(name$2);
 		const squaresFromModState = ARRAY_9.map((eachIdx) => {
 			const { value } = b(squareModState, `${eachIdx}`);
@@ -10174,9 +10177,6 @@ var play = (nextSquares) => {
 			console.error(`game.play: (getMod) (${idx}) squares are not the same: sqauresFromModState: ${squaresFromModState[idx]} nextSquares: ${nextSquares[idx]}`);
 			break;
 		}
-		const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-		set(null, { history: nextHistory });
-		set(null, { currentMove: nextHistory.length - 1 });
 	};
 };
 var setCurrentMove = (currentMove) => {
@@ -10405,7 +10405,7 @@ var Header_module_default = {
 	link: "_link_1dxzb_26"
 };
 //#endregion
-//#region src/Header.tsx
+//#region src/components/Header.tsx
 var Header_default = () => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: Header_module_default.root,
@@ -10420,7 +10420,7 @@ var Header_default = () => {
 				children: "async-counter"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-				href: "https://github.com/chhsiao1981/demo-use-thunk",
+				href: "https://github.com/chhsiao1981/demo-use-thunk-tic-tac-toe",
 				className: Header_module_default.github,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 					"aria-label": "github logo",

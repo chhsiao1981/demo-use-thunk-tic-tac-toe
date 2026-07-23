@@ -4,7 +4,7 @@ import {
   getMod,
   getStateByModule,
   type Thunk,
-} from "@chhsiao1981/use-thunk";
+} from "use-thunk";
 import { ARRAY_9 } from "../const";
 import { name as gameName, type State as gameState } from "./game";
 import type { TypeModGame } from "./types";
@@ -40,13 +40,15 @@ export const click = (
       return value;
     });
 
+    const doGame = doMod<gameState, TypeModGame>(gameName);
+    doGame.play(nextSquares);
+
+    /////
+    // to show that getModuleState and goMod<State>(name) are the same.
     const moduleState2 = getMod<State>(name);
     if (moduleState !== moduleState2) {
       console.error("sqaure.click (getMod): moduleState !== moduleState2");
     }
-
-    const doGame = doMod<gameState, TypeModGame>(gameName);
-    doGame.play(nextSquares);
   };
 };
 

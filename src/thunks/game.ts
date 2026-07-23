@@ -4,7 +4,7 @@ import {
   getMod,
   getStateByModule,
   type Thunk,
-} from "@chhsiao1981/use-thunk";
+} from "use-thunk";
 import { ARRAY_9 } from "../const";
 import { name as squareName, type State as squareState } from "./square";
 import type { TypeModSquare } from "./types";
@@ -25,6 +25,14 @@ export const play = (nextSquares: string[]): Thunk<State> => {
   return (set, get) => {
     const { history, currentMove } = get();
 
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+
+    // can be integrated as set(null, {history: nextHistory, currentMove: nextHistory.length - 1})
+    set(null, { history: nextHistory });
+    set(null, { currentMove: nextHistory.length - 1 });
+
+    /////
+    // to show that we can get the same squares from game.
     const squareModState = getMod<squareState>(squareName);
     const squaresFromModState = ARRAY_9.map((eachIdx) => {
       const { value } = getStateByModule(squareModState, `${eachIdx}`);
@@ -38,12 +46,6 @@ export const play = (nextSquares: string[]): Thunk<State> => {
         break;
       }
     }
-
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-
-    // can be integrated as set(null, {history: nextHistory, currentMove: nextHistory.length - 1})
-    set(null, { history: nextHistory });
-    set(null, { currentMove: nextHistory.length - 1 });
   };
 };
 

@@ -1,4 +1,4 @@
-import type { State as _State, Thunk } from "@chhsiao1981/use-thunk";
+import type { State as _State, Thunk } from "use-thunk";
 
 export const name = "demo-use-thunk-tic-tac-toe/board";
 

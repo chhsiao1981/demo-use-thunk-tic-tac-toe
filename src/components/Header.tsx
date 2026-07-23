@@ -1,4 +1,4 @@
-import githubLogo from "./assets/github.svg";
+import githubLogo from "../assets/github.svg";
 import styles from "./Header.module.css";
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
         async-counter
       </a>
       <a
-        href="https://github.com/chhsiao1981/demo-use-thunk"
+        href="https://github.com/chhsiao1981/demo-use-thunk-tic-tac-toe"
         className={styles.github}
       >
         <img aria-label="github logo" src={githubLogo} />

@@ -1,5 +1,5 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { useEffect } from "react";
+import { useThunk } from "use-thunk";
 import { ARRAY_9 } from "../const";
 import * as ModBoard from "../thunks/board";
 import * as ModGame from "../thunks/game";
